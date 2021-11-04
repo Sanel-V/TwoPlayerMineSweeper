@@ -37,8 +37,14 @@ namespace MineSweeper2Pt8hgxr.View
             this.saveGameItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadGameItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label1 = new System.Windows.Forms.Label();
+            this.boardLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.label1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
+            this.boardLayout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // contextMenuStrip1
@@ -54,7 +60,7 @@ namespace MineSweeper2Pt8hgxr.View
             this.fileMenu});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(396, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(434, 28);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -93,13 +99,50 @@ namespace MineSweeper2Pt8hgxr.View
             this.exitItem.Size = new System.Drawing.Size(168, 26);
             this.exitItem.Text = "Exit";
             // 
+            // boardLayout
+            // 
+            this.boardLayout.AutoSize = true;
+            this.boardLayout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.boardLayout.ColumnCount = 2;
+            this.boardLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.boardLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.boardLayout.Controls.Add(this.dataGridView1, 0, 0);
+            this.boardLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.boardLayout.Location = new System.Drawing.Point(0, 28);
+            this.boardLayout.MinimumSize = new System.Drawing.Size(200, 200);
+            this.boardLayout.Name = "boardLayout";
+            this.boardLayout.RowCount = 2;
+            this.boardLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.boardLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.boardLayout.Size = new System.Drawing.Size(434, 432);
+            this.boardLayout.TabIndex = 4;
+            this.boardLayout.Visible = false;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.RowTemplate.Height = 29;
+            this.dataGridView1.Size = new System.Drawing.Size(192, 188);
+            this.dataGridView1.TabIndex = 0;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.label1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 438);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(434, 22);
+            this.statusStrip1.TabIndex = 5;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(56, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 20);
-            this.label1.TabIndex = 3;
+            this.label1.Size = new System.Drawing.Size(0, 16);
             // 
             // MineSweeper2PView
             // 
@@ -107,8 +150,9 @@ namespace MineSweeper2Pt8hgxr.View
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(396, 442);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(434, 460);
+            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.boardLayout);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(300, 300);
@@ -117,6 +161,10 @@ namespace MineSweeper2Pt8hgxr.View
             this.Load += new System.EventHandler(this.GameForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.boardLayout.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -130,6 +178,9 @@ namespace MineSweeper2Pt8hgxr.View
         private System.Windows.Forms.ToolStripMenuItem saveGameItem;
         private System.Windows.Forms.ToolStripMenuItem loadGameItem;
         private System.Windows.Forms.ToolStripMenuItem exitItem;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TableLayoutPanel boardLayout;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel label1;
     }
 }
