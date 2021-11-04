@@ -75,9 +75,10 @@ namespace MineSweeper2Pt8hgxr.Model
         public void RevealField(Int32 x, Int32 y)
         {
             gameBoard.Reveal(x, y);
-            OnRefreshBoard();
+            
             if (gameBoard.OnlyBombsLeft())
             {
+                OnRefreshBoard();
                 OnGameOver(true, CurrentPlayer);
             }
             else
@@ -90,6 +91,7 @@ namespace MineSweeper2Pt8hgxr.Model
                 {
                     CurrentPlayer = NextPlayer(CurrentPlayer);
                 }
+                OnRefreshBoard();
             }
           
             

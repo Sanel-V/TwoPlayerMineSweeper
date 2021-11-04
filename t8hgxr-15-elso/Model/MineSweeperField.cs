@@ -56,7 +56,7 @@ namespace MineSweeper2Pt8hgxr.Model
         #region Constructors
         public MineSweeperField()
         {
-            Revealed = DEBUG;
+            //Revealed = ;
         }
         public MineSweeperField(Boolean revealed = false)
         {

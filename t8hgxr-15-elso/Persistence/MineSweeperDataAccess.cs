@@ -19,10 +19,12 @@ namespace MineSweeper2Pt8hgxr.Persistence
                     String line = await reader.ReadLineAsync();
                     String[] headerSplit = line.Split(" ");
                     Int32 boardSize = Convert.ToInt32(headerSplit[0]);
-                    PlayerEnum currentPlayer = (PlayerEnum)Convert.ToInt32(headerSplit[1]);
-                    MineSweeperBoard gameBoard = new MineSweeperBoard();
+
+                    PlayerEnum currentPlayer = (PlayerEnum)Enum.Parse(typeof(PlayerEnum), headerSplit[1]);
+                    MineSweeperBoard gameBoard;// = new MineSweeperBoard();
                     if(boardSize != 0)
                     {
+
                         gameBoard = new MineSweeperBoard(boardSize);
                     }else
                     {
@@ -31,34 +33,37 @@ namespace MineSweeper2Pt8hgxr.Persistence
                     for (int i = 0; i < boardSize; i++)
                     {
                         line = await reader.ReadLineAsync();
-                        String[] boardValues = line.Split(' ');
+                        String boardValues = line;
                         for (int j = 0; j < boardSize; j++)
                         {
-                            if(boardValues[j].Equals("X"))
+                            if(boardValues[j].Equals('X'))
                             {
                                 gameBoard.PlaceBomb(i, j);
                                 gameBoard.Reveal(i, j);
                             }else
-                            if (boardValues[j].Equals("x"))
+                            if (boardValues[j].Equals('x'))
                             {
                                 gameBoard.PlaceBomb(i, j);
                             }else
-                            if (boardValues[j].Equals("#"))
                             {
+                                if (!boardValues[j].Equals('#'))
+                                {
+                                    gameBoard[i,j].Reveal();
+                                    //
+                                }
                                 
-                            }else
-                            {
-                                gameBoard.Reveal(i, j);
                             }
+                            
                         }
-                        gameBoard.UpdateFieldValues();
+                        
 
                     }
+                    gameBoard.UpdateFieldValues();
                     return new MineSweeper2PGameState(gameBoard, currentPlayer);
                 }
-            }catch
+            }catch(Exception ex)
             {
-                throw new Exception();
+                throw ex;
             }
         }
 

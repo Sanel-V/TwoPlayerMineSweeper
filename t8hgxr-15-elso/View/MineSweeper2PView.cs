@@ -32,12 +32,9 @@ namespace MineSweeper2Pt8hgxr.View
             saveGameItem.Click += SaveGameItem_Click;
             loadGameItem.Click += LoadGameItem_Click;
             exitItem.Click += ExitItem_Click;
-            /*
-            boardLayout.
-            boardLayout.Margin = Padding.Empty;
-            boardLayout.Padding = Padding.Empty;
-            boardLayout.CellBorderStyle = TableLayoutPanelCellBorderStyle.None;
-            _ = boardLayout.Margin.All;*/
+
+            saveGameItem.Enabled = false;
+
             boardLayout.Margin = new Padding(0);
             boardLayout.Padding = new Padding(5,5,5,31);
 
@@ -55,16 +52,24 @@ namespace MineSweeper2Pt8hgxr.View
         private async void LoadGameItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Save files (*.sav)|*.sav|txt files (*.txt)|*.txt|All files (*) |*";
+
             if (openFileDialog.ShowDialog() == DialogResult.OK) // ha kiválasztottunk egy fájlt
             {
                 try
                 {
                     // játék betöltése
                     await gameModel.LoadGameAsync(openFileDialog.FileName);
+                    boardLayout.Controls.Clear();
+                    saveGameItem.Enabled = true;
+                    GenerateTable(gameModel.BoardSize);
+                    GameModel_RefreshBoard(sender, new MineSweeperRefreshBoardEventArgs());
+                    
+
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Játék betöltése sikertelen!" + Environment.NewLine + "Hibás az elérési út, vagy a fájlformátum.", "Hiba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show( ex.Message + ex.StackTrace + "Játék betöltése sikertelen!" + Environment.NewLine + "Hibás az elérési út, vagy a fájlformátum.", "Hiba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 }
 
@@ -75,6 +80,7 @@ namespace MineSweeper2Pt8hgxr.View
         private async void SaveGameItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Filter = "Save files (*.sav)|*.sav|txt files (*.txt)|*.txt|All files (*) |*";
             if (saveDialog.ShowDialog() == DialogResult.OK)
             {
                 try
@@ -99,6 +105,8 @@ namespace MineSweeper2Pt8hgxr.View
                     {
                         boardLayout.Controls.Clear();
                     }
+                    saveGameItem.Enabled = true;
+
                     Int32 gameSize = dialog.Result;
                     GenerateTable(gameSize);
                     gameModel.NewGame((MineSweeper2PModel.GameSize)gameSize);
@@ -136,6 +144,8 @@ namespace MineSweeper2Pt8hgxr.View
 
         private void GameModel_GameOver(object sender, MineSweeperGameOverEventArgs e)
         {
+            saveGameItem.Enabled = false;
+            boardLayout.Enabled = false;
             for (int i = 0; i < gameModel.BoardSize; i++)
             {
                 for (int j = 0; j < gameModel.BoardSize; j++)
@@ -163,6 +173,7 @@ namespace MineSweeper2Pt8hgxr.View
         private void GenerateTable(Int32 gameSize)
         {
             boardLayout.Visible = true;
+            boardLayout.Enabled = true;
             boardLayout.ColumnCount = gameSize;
             boardLayout.RowCount = gameSize;
 
@@ -191,7 +202,7 @@ namespace MineSweeper2Pt8hgxr.View
                     button.Margin = new Padding(0);
                     button.Padding = new Padding(0);
                     
-                    boardLayout.Controls.Add(button, i, j);
+                    boardLayout.Controls.Add(button, j, i);
 
                 }
         }
