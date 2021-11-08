@@ -53,6 +53,7 @@ namespace MineSweeper2Pt8hgxr.View
             this.boardSizeChooser.Name = "boardSizeChooser";
             this.boardSizeChooser.Size = new System.Drawing.Size(97, 27);
             this.boardSizeChooser.TabIndex = 2;
+            this.boardSizeChooser.Text = "Medium";
             // 
             // dialogOKButton
             // 
