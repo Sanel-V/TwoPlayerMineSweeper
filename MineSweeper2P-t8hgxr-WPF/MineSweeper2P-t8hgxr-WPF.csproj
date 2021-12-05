@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>MineSweeper2P_t8hgxr_WPF</RootNamespace>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+</Project>

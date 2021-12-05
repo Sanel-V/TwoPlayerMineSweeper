@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\t8hgxr-15-elso\MineSweeper2P-t8hgxr-elso.csproj" />
+    <ProjectReference Include="..\t8hgxr-15-elso\MineSweeper2P-t8hgxr-WinForms.csproj" />
 
 </ItemGroup>
 
