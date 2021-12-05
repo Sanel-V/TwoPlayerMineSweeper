@@ -11,24 +11,34 @@ namespace MineSweeper2P_t8hgxr_WPF.ViewModel
         #region Fields
         //Board field to wrap
         private MineSweeperField field;
-        private Int32 fieldValue;
-        private Boolean revealed;
-        private Boolean hasBomb;
         #endregion
 
         #region Properties
+        public MineSweeperField Field
+        {
+            get { return field; }
+            /*private set 
+            {
+                if (field != value)
+                {
+                    field = value;
+                    OnPropertyChanged();
+                }
+            }*/
+        }
+
         public Int32 Value
         { 
             get
             {
-                return fieldValue;
+                return field.Value;
             }
 
             set 
             {
-                if (fieldValue != value)
+                if (field.Value != value)
                 {
-                    fieldValue = value;
+                    field.Value = value;
                     OnPropertyChanged();
                 }
             }
@@ -37,25 +47,25 @@ namespace MineSweeper2P_t8hgxr_WPF.ViewModel
         {
             get
             {
-                return revealed;
+                return field.Revealed;
             }
-
+            /*
             set
             {
-                if (revealed != value)
+                if (field.Revealed != value)
                 {
-                    revealed = value;
+                    field.Revealed = value;
                     OnPropertyChanged();
                 }
-            }
+            }*/
         }
         public Boolean HasBomb
         {
             get
             {
-                return hasBomb;
+                return field.HasBomb;
             }
-
+            /*
             set
             {
                 if (hasBomb != value)
@@ -63,32 +73,45 @@ namespace MineSweeper2P_t8hgxr_WPF.ViewModel
                     hasBomb = value;
                     OnPropertyChanged();
                 }
-            }
+            }*/
         }
 
         public Int32 X { get; set; }
         public Int32 Y { get; set; }
 
+        public String Text 
+        {
+            get
+            {
+                if(Revealed)
+                {
+                    if(HasBomb)
+                    {
+                        return "X";
+                    }
+                    return Value != 0 ? Value.ToString() : "" ;
+                }
+                return "";
+                
+            }
+        }
+        #endregion
+
+        #region Commands
         public DelegateCommand RevealCommand { get; set; }
 
         #endregion
 
-
         #region Constructors
 
-        /*
-        public MineSweeperFieldViewModel()
-        {
-            Value = 0;
-            Revealed = 
-        }
-        */
-        public MineSweeperFieldViewModel(MineSweeperField field, Int32 x, Int32 y, DelegateCommand command = null)
+        public MineSweeperFieldViewModel
+            (
+            MineSweeperField field, 
+            Int32 x, 
+            Int32 y, 
+            DelegateCommand command = null)
         {
             this.field = field;
-            Value = field.Value;
-            Revealed = field.Revealed;
-            HasBomb = field.HasBomb;
             X = x;
             Y = y;
             RevealCommand = command;
