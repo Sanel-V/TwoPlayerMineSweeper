@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text;
 using MineSweeper2Pt8hgxr.Model;
 using MineSweeper2Pt8hgxr.Model.EventArguments;
@@ -12,27 +13,75 @@ namespace MineSweeper2P_t8hgxr_WPF.ViewModel
 
         private MineSweeper2PModel model;
 
+        private PlayerEnum currentPlayer;
+        private Int32 boardSize;
+
+        private bool canSave;
+        private ObservableCollection<MineSweeperFieldViewModel> fields;
         #endregion
 
         #region Properties
-            public PlayerEnum CurrentPlayer
+        public PlayerEnum CurrentPlayer
+        {
+            get { return currentPlayer; }
+            set
             {
-                get { return model.CurrentPlayer; }
-               
+                if(currentPlayer != value)
+                {
+                    currentPlayer = value;
+                    OnPropertyChanged();
+                }
             }
-            public Int32 BoardSize { get { return model.BoardSize; } }
+        }
+        public Int32 BoardSize
+        {     
+            get 
+            { 
+                return boardSize; 
+            } 
+            set 
+            { 
+                if(boardSize != value)
+                {
+                    boardSize = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
             
-            public ObservableCollection<MineSweeperFieldViewModel> Fields { get; set; }
+        public bool CanSave
+        {
+            get
+            {
+                return canSave;
+            }
+            set
+            {
+                if(canSave != value)
+                {
+                    canSave = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public ObservableCollection<MineSweeperFieldViewModel> Fields 
+        { 
+            get { return fields; } 
+            set { if (fields != value) { fields = value; OnPropertyChanged(); } } 
+        }
 
         #endregion
 
         #region Events
 
-        public event EventHandler NewGame;
+        public event EventHandler NewGameEvent;
 
-        public event EventHandler LoadGame;
+        public event EventHandler LoadGameEvent;
 
-        public event EventHandler SaveGame;
+        public event EventHandler SaveGameEvent;
+
+        public event EventHandler<MineSweeperGameOverEventArgs> GameOverEvent;
 
         #endregion
 
@@ -46,6 +95,7 @@ namespace MineSweeper2P_t8hgxr_WPF.ViewModel
         #region Constructors
         public MineSweeper2PViewModel(MineSweeper2PModel model)
         {
+            CanSave = false;
             this.model = model;
             model.GameOver += new EventHandler<MineSweeperGameOverEventArgs>(Model_GameOver);
             model.RefreshBoard += new EventHandler<MineSweeperRefreshBoardEventArgs>(Model_RefreshTable);
@@ -54,17 +104,28 @@ namespace MineSweeper2P_t8hgxr_WPF.ViewModel
             SaveGameCommand = new DelegateCommand(param => OnSaveGame());
 
 
+        }
+        
+        #endregion
+
+        #region Methods
+
+        public void NewGame(Int32 gameSize)
+        {
+            CanSave = true;
             Fields = new ObservableCollection<MineSweeperFieldViewModel>();
-            MineSweeperBoard board = model.gameBoard;   
+            
+            BoardSize = gameSize;
             for (int i = 0; i < BoardSize; i++)
             {
                 for (int j = 0; j < BoardSize; j++)
                 {
-                    MineSweeperField field = board[i, j];
+                    //MineSweeperField field = board[i, j];
 
                     Fields.Add(new MineSweeperFieldViewModel
                         (
-                         field,
+                         //field,
+                         i * BoardSize + j,
                          i,
                          j,
                          new DelegateCommand(param => Reveal(Convert.ToInt32(param)))
@@ -72,20 +133,47 @@ namespace MineSweeper2P_t8hgxr_WPF.ViewModel
                     );
                 }
             }
-            OnPropertyChanged("CurrentPlayer");
+            model.NewGame((MineSweeper2PModel.GameSize)gameSize);
         }
-        #endregion
 
-        #region Methods
+        public void LoadGame()
+        {
+            CanSave = true;
+            Fields = new ObservableCollection<MineSweeperFieldViewModel>();
+
+            BoardSize = model.BoardSize;
+            for (int i = 0; i < BoardSize; i++)
+            {
+                for (int j = 0; j < BoardSize; j++)
+                {
+                    //MineSweeperField field = board[i, j];
+
+                    Fields.Add(new MineSweeperFieldViewModel
+                        (
+                         //field,
+                         i * BoardSize + j,
+                         i,
+                         j,
+                         new DelegateCommand(param => Reveal(Convert.ToInt32(param)))
+                        )
+                    );
+                }
+            }
+            ForceRefresh();
+        }
 
         private void Reveal(Int32 index)
         {
-           //MineSweeperFieldViewModel vmField = 
-           Fields[index].Field.Reveal();
+            var fieldVM = Fields[index];
+            model.RevealField(fieldVM.X, fieldVM.Y);
 
-            
             OnPropertyChanged("CurrentPlayer");
 
+        }
+
+        public void ForceRefresh()
+        {
+            Model_RefreshTable(this, new MineSweeperRefreshBoardEventArgs());
         }
 
         #endregion
@@ -94,29 +182,69 @@ namespace MineSweeper2P_t8hgxr_WPF.ViewModel
         
         private void Model_GameOver(object sender, MineSweeperGameOverEventArgs e)
         {
-            throw new NotImplementedException("Model_GameOver");
+            CanSave = false;
+            foreach (var field in Fields)
+            {
+                field.IsEnabled = false;
+                if(field.HasBomb)
+                {
+                    field.Revealed = true;
+                    field.Text = "X";
+                    
+                }
+            }
+            OnGameOver(e);
         }
 
         private void Model_RefreshTable(object sender, MineSweeperRefreshBoardEventArgs e)
-	    {
-            OnPropertyChanged("CurrentPlayer");
+        {
+            if(!CanSave)
+            {
+                return;
+            }
+            CurrentPlayer = model.CurrentPlayer;
+
+            if (Fields != null)
+            { 
+                for (int i = 0; i < model.BoardSize; i++)
+                {
+                    for (int j = 0; j < model.BoardSize; j++)
+                    {
+                        var field = model.gameBoard[i, j];
+                        var fieldVM = Fields[i * model.BoardSize + j];
+                        fieldVM.Revealed = field.Revealed;
+                        fieldVM.IsEnabled = !fieldVM.Revealed;
+                        fieldVM.HasBomb = field.HasBomb;
+                        fieldVM.Value = field.Value;
+                        fieldVM.Text = fieldVM.changeText();
+                        
+                    }
+                }
+            }
+            
         }
         #endregion
 
         #region Event methods
         private void OnNewGame()
         {
-            NewGame.Invoke(this, EventArgs.Empty);
+            NewGameEvent.Invoke(this, EventArgs.Empty);
 
         }
         private void OnLoadGame()
         {
-            LoadGame.Invoke(this, EventArgs.Empty);
+            LoadGameEvent.Invoke(this, EventArgs.Empty);
         }
         private void OnSaveGame()
         {
-            SaveGame.Invoke(this, EventArgs.Empty);
+            SaveGameEvent.Invoke(this, EventArgs.Empty);
         }
+
+        private void OnGameOver(MineSweeperGameOverEventArgs e)
+        {
+            GameOverEvent.Invoke(this, e);
+        }
+
         #endregion
 
     }

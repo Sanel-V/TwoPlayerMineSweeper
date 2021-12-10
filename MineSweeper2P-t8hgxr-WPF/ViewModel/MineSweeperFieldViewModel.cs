@@ -10,10 +10,18 @@ namespace MineSweeper2P_t8hgxr_WPF.ViewModel
     {
         #region Fields
         //Board field to wrap
-        private MineSweeperField field;
+        //private MineSweeperField field;
+        private Int32 fieldValue;
+        private Boolean revealed;
+        private Boolean hasBomb;
+
+        private String text;
+        private Boolean isEnabled;
+
         #endregion
 
         #region Properties
+        /*
         public MineSweeperField Field
         {
             get { return field; }
@@ -24,21 +32,18 @@ namespace MineSweeper2P_t8hgxr_WPF.ViewModel
                     field = value;
                     OnPropertyChanged();
                 }
-            }*/
+            }
         }
+        */
 
         public Int32 Value
-        { 
-            get
+        {
+            get { return fieldValue; }
+            set
             {
-                return field.Value;
-            }
-
-            set 
-            {
-                if (field.Value != value)
+                if (fieldValue != value)
                 {
-                    field.Value = value;
+                    fieldValue = value;
                     OnPropertyChanged();
                 }
             }
@@ -47,25 +52,25 @@ namespace MineSweeper2P_t8hgxr_WPF.ViewModel
         {
             get
             {
-                return field.Revealed;
+                return revealed;
             }
-            /*
             set
-            {
-                if (field.Revealed != value)
+            { 
+                if (revealed != value)
                 {
-                    field.Revealed = value;
+                    revealed = value;
                     OnPropertyChanged();
                 }
-            }*/
+            }
         }
+
         public Boolean HasBomb
         {
             get
             {
-                return field.HasBomb;
+                return hasBomb;
             }
-            /*
+            
             set
             {
                 if (hasBomb != value)
@@ -73,26 +78,42 @@ namespace MineSweeper2P_t8hgxr_WPF.ViewModel
                     hasBomb = value;
                     OnPropertyChanged();
                 }
-            }*/
+            }
         }
 
+        public Int32 Number { get; set; }
         public Int32 X { get; set; }
         public Int32 Y { get; set; }
 
+        public Boolean IsEnabled
+        {
+            get
+            {
+                //If revealed, disable
+                return isEnabled;
+            }
+            set
+            {
+                if(isEnabled != value)
+                {
+                    isEnabled = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public String Text 
         {
             get
             {
-                if(Revealed)
+                return text;
+            }
+            set
+            {
+                if (text != value)
                 {
-                    if(HasBomb)
-                    {
-                        return "X";
-                    }
-                    return Value != 0 ? Value.ToString() : "" ;
+                    text = value;
+                    OnPropertyChanged();
                 }
-                return "";
-                
             }
         }
         #endregion
@@ -104,18 +125,40 @@ namespace MineSweeper2P_t8hgxr_WPF.ViewModel
 
         #region Constructors
 
-        public MineSweeperFieldViewModel
-            (
-            MineSweeperField field, 
-            Int32 x, 
-            Int32 y, 
+        public MineSweeperFieldViewModel(
+            //MineSweeperField field, 
+            Int32 number,Int32 x, Int32 y, 
             DelegateCommand command = null)
         {
-            this.field = field;
+            //this.field = field;
+            Number = number;
             X = x;
             Y = y;
             RevealCommand = command;
+            /*
+            Value = field.Value;
+            Revealed = field.Revealed;
+            HasBomb = field.HasBomb;*/
+            Text = changeText();
+
         }
         #endregion
+
+        #region Methods
+
+        public String changeText()
+        {
+            if (Revealed)
+            {
+                if (HasBomb)
+                {
+                    return "X";
+                }
+                return Value != 0 ? Value.ToString() : "";
+            }
+            return "";
+        }
+        #endregion
+
     }
 }
