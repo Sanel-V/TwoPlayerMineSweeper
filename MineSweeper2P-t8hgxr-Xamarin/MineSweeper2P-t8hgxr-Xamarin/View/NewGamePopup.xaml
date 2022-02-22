@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MineSweeper2P_t8hgxr_Xamarin.View.NewGamePopup"
+             >
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand"
+                     VerticalOptions="CenterAndExpand" Margin="10">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+            <Label Text="Game size:"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="Start" />
+            <Picker 
+                VerticalOptions="StartAndExpand" 
+                HorizontalOptions="FillAndExpand" 
+                x:Name="sizePicker">
+                <Picker.ItemsSource>
+                    <Array Type="{x:Type x:Int32}">
+                        <x:Int32>6</x:Int32>
+                        <x:Int32>10</x:Int32>
+                        <x:Int32>16</x:Int32>
+                    </Array>
+                </Picker.ItemsSource>
+                <Picker.SelectedIndex>1</Picker.SelectedIndex>
+            </Picker>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                <Button Text="Ok" Clicked="OkButton_Clicked" HorizontalOptions="FillAndExpand"/>
+                <Button Text="Cancel" Clicked="CancelButton_Clicked" HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
