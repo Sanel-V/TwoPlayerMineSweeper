@@ -9,8 +9,7 @@ namespace MineSweeper2P_t8hgxr_WPF.ViewModel
     public class MineSweeperFieldViewModel : ViewModelBase
     {
         #region Fields
-        //Board field to wrap
-        //private MineSweeperField field;
+
         private Int32 fieldValue;
         private Boolean revealed;
         private Boolean hasBomb;
@@ -21,20 +20,6 @@ namespace MineSweeper2P_t8hgxr_WPF.ViewModel
         #endregion
 
         #region Properties
-        /*
-        public MineSweeperField Field
-        {
-            get { return field; }
-            /*private set 
-            {
-                if (field != value)
-                {
-                    field = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        */
 
         public Int32 Value
         {
@@ -126,19 +111,13 @@ namespace MineSweeper2P_t8hgxr_WPF.ViewModel
         #region Constructors
 
         public MineSweeperFieldViewModel(
-            //MineSweeperField field, 
             Int32 number,Int32 x, Int32 y, 
             DelegateCommand command = null)
         {
-            //this.field = field;
             Number = number;
             X = x;
             Y = y;
             RevealCommand = command;
-            /*
-            Value = field.Value;
-            Revealed = field.Revealed;
-            HasBomb = field.HasBomb;*/
             Text = changeText();
 
         }

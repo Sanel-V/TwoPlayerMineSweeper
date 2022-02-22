@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MineSweeper2P_t8hgxr_Xamarin.View.GamePage">
+    <ContentPage.Content>
+        <!--
+        <StackLayout>
+            <Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+        </StackLayout>-->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Button Text="New Game" Grid.Row="0"></Button>
+            <Button Text="New Game" Grid.Row="0"></Button>
+            <Button Text="New Game" Grid.Row="0"></Button>
+<!--
+            <Menu Grid.Row="0">
+                <MenuItem Header="File">
+                    <MenuItem Header="New Game" Command="{Binding NewGameCommand}"></MenuItem>
+                    <MenuItem Header="Save Game" Command="{Binding SaveGameCommand}" IsEnabled="{Binding CanSave}"></MenuItem>
+                    <MenuItem Header="Load Game" Command="{Binding LoadGameCommand}"></MenuItem>
+
+                </MenuItem>
+            </Menu>-->
+            <!--
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding Fields}" Name="fieldGrid">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="{Binding BoardSize}" Columns="{Binding BoardSize}" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button
+                        Command="{Binding RevealCommand}"
+                        CommandParameter="{Binding Number}"
+                        Content="{Binding Text}"
+                        IsEnabled="{Binding IsEnabled}"
+                        FontSize="16">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding HasBomb}" Value="True"/>
+                                                <Condition Binding="{Binding Revealed}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+
+                                            <Setter Property="Background" Value="Red"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemContainerStyle>-->
+                    <!--a függőségi tulajdonságokat kjülön kell kötnünk
+                    <Style>
+                        <Setter Property="Grid.Row" Value="{Binding X}" />
+                        <Setter Property="Grid.Column" Value="{Binding Y}" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+            </ItemsControl>
+            <StatusBar Grid.Row="2">
+                <StatusBarItem>
+                    <TextBlock Text="Current player: "/>
+                </StatusBarItem>
+                <StatusBarItem>
+                    <TextBlock>
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Text" Value=""/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding CanSave}" Value="True">
+                                        <Setter Property="Text" Value="{Binding CurrentPlayer}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
+
+                </StatusBarItem>
+            </StatusBar>-->
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
