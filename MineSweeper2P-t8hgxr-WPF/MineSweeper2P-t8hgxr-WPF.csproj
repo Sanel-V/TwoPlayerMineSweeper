@@ -7,4 +7,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MineSweeper2P\MineSweeper2P.csproj" />
+  </ItemGroup>
+
 </Project>

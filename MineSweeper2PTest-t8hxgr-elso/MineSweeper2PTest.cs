@@ -6,7 +6,7 @@ using Moq;
 using System.Threading.Tasks;
 using System.IO;
 using System;
-namespace MineSweeper2PTest_t8hxgr_elso
+namespace MineSweeper2PTest_t8hxgr
 {
     [TestClass]
     public class MineSweeper2PTest

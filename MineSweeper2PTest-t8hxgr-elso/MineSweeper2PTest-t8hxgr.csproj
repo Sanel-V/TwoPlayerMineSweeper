@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>MineSweeper2PTest_t8hxgr_elso</RootNamespace>
+    <RootNamespace>MineSweeper2PTest_t8hxgr</RootNamespace>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -16,8 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\t8hgxr-15-elso\MineSweeper2P-t8hgxr-WinForms.csproj" />
-
-</ItemGroup>
+    <ProjectReference Include="..\MineSweeper2P\MineSweeper2P.csproj" />
+  </ItemGroup>
 
 </Project>

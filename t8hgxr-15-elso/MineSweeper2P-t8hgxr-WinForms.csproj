@@ -3,8 +3,12 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>t8hgxr_15_elso</RootNamespace>
+    <RootNamespace>MineSweeper2P_t8hgxr_WinForms</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MineSweeper2P\MineSweeper2P.csproj" />
+  </ItemGroup>
 
 </Project>
